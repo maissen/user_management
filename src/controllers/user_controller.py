@@ -40,3 +40,12 @@ async def create_user(name: str, email: str) -> Dict[str, Any]:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail="Internal server error")
+
+
+async def delte_user_by_id(user_id: int) -> Dict[str, Any]:
+
+    if user_id is None or user_id < 0:
+        raise HTTPException(status_code=500, detail="Invalid user id")
+    
+    user = await user_service.delete_user_by_id(user_id=user_id)
+    return {"status": "success", "data": user}
