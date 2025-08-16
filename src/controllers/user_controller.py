@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from services import user_service
+from ..services import user_service
 from typing import Dict, Any
 
 async def get_all_users() -> Dict[str, Any]:
