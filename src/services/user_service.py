@@ -47,3 +47,9 @@ async def get_user_by_email(email: str) -> Optional[Dict[str, Any]]:
         if user["email"] == email_lower:
             return user.copy()
     return None
+
+async def delete_user_by_id(user_id: int):
+    user = await get_user_by_id(user_id=user_id)
+    if user is None:
+        raise ValueError(f"User with id {user_id} does not exist")
+    users.remove(user)
