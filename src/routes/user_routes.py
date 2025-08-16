@@ -14,3 +14,7 @@ async def get_user_by_id(user_id: int):
 @router.post("/")
 async def create_user(name: str, email: str):
     return await user_controller.create_user(name, email)
+
+@router.delete("/{user_id}")
+async def delete_user_by_id(user_id: int):
+    return await user_controller.delte_user_by_id(user_id=user_id)
