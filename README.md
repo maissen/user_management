@@ -46,7 +46,7 @@ docker run -d \
 ### 4. Start the Application
 
 ```bash
-docker container run -d -p 8100:8000 --network user_management_network --name user_platform user_management:latest
+docker container run -d -p 8100:8000 --network user_management_network -v $(pwd):/app --name user_platform user_management:latest
 ```
 
 ## Access Information
