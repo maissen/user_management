@@ -1,0 +1,52 @@
+services:
+  backend_fastapi:
+    image: user_management:latest
+    container_name: user_platform_backend
+    ports:
+      - 8888:8000
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+        read_only: false
+    networks:
+      - user_management_network
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+  postgres_db:
+    image: postgres:17-alpine
+    container_name: user_platform_db
+    ports:
+      - 8889:5432
+    environment:
+      POSTGRES_USER: maissen
+      POSTGRES_PASSWORD: maissen
+      POSTGRES_DB: user_management
+    volumes:
+      - type: volume
+        source: user_management_volume
+        target: /var/lib/postgresql/data
+        read_only: false
+    networks:
+      - user_management_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+
+
+networks:
+  user_management_network:
+
+volumes:
+  user_management_volume:
