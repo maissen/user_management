@@ -16,6 +16,10 @@ class Settings:
     HOST: str = os.getenv("HOST", "0.0.0.0")
     INTERNAL_PORT: int = int(os.getenv("INTERNAL_PORT", "8000"))
 
+    # Postgres db configuration
+    POSTGRES_USER: str = os.getenv("POSTGRES_USER")
+    POSTGRES_PASSWORD: str = os.getenv("POSTGRES_PASSWORD")
+    POSTGRES_DB: str = os.getenv("POSTGRES_DB")
 
     def __init__(self):
         pass
