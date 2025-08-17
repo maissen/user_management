@@ -3,7 +3,7 @@ services:
     image: user_management:latest
     container_name: user_platform_backend
     ports:
-      - 8888:8000
+      - 8100:8000
     volumes:
       - type: bind
         source: .

@@ -9,7 +9,7 @@ def create_connection():
             dbname=settings.POSTGRES_DB,
             user=settings.POSTGRES_USER,
             password=settings.POSTGRES_PASSWORD,
-            host="user_management_postgres",
+            host="user_platform_db",
         )
         print("✅ Connection to PostgreSQL successful")
         return connection
