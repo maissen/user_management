@@ -23,6 +23,12 @@ docker image build -t user_management .
 docker network create user_management_network
 ```
 
+### 3. Create Docker Volume
+
+```bash
+docker volume create user_management_volume
+```
+
 ### 3. Start PostgreSQL Database
 
 ```bash
@@ -32,6 +38,7 @@ docker run -d \
   -e POSTGRES_PASSWORD=maissen \
   -e POSTGRES_DB=user_management \
   --network user_management_network \
+  -v user_management_volume:/var/lib/postgresql/data \
   --name user_management_postgres \
   postgres:17-alpine
 ```
@@ -132,48 +139,3 @@ docker rmi user_management:latest
    ```bash
    docker exec -it user_management_postgres psql -U maissen -d user_management
    ```
-
-### Reset Everything
-If you need to start fresh:
-```bash
-docker stop user_platform user_management_postgres 2>/dev/null || true
-docker rm user_platform user_management_postgres 2>/dev/null || true
-docker network rm user_management_network 2>/dev/null || true
-```
-
-Then run the setup commands again.
-
-## Development
-
-### Rebuilding the Application
-After making code changes:
-```bash
-# Stop the application container
-docker stop user_platform
-docker rm user_platform
-
-# Rebuild the image
-docker image build -t user_management .
-
-# Start the new container
-docker container run -d -p 8100:8000 --network user_management_network --name user_platform user_management:latest
-```
-
-### Database Persistence
-The current setup doesn't persist database data between container restarts. To add persistence, modify the PostgreSQL command:
-
-```bash
-docker run -d \
-  -p 8889:5432 \
-  -e POSTGRES_USER=maissen \
-  -e POSTGRES_PASSWORD=maissen \
-  -e POSTGRES_DB=user_management \
-  -v user_management_data:/var/lib/postgresql/data \
-  --network user_management_network \
-  --name user_management_postgres \
-  postgres:17-alpine
-```
-
-## Support
-
-If you encounter issues, please check the container logs and ensure all prerequisites are met. Make sure no other services are using ports 8100 and 8889.
