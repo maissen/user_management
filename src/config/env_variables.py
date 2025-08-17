@@ -20,6 +20,8 @@ class Settings:
     POSTGRES_USER: str = os.getenv("POSTGRES_USER")
     POSTGRES_PASSWORD: str = os.getenv("POSTGRES_PASSWORD")
     POSTGRES_DB: str = os.getenv("POSTGRES_DB")
+    POSTGRES_INTERNAL_PORT: str = os.getenv("POSTGRES_INTERNAL_PORT")
+    POSTGRES_EXTERNAL_PORT: str = os.getenv("POSTGRES_EXTERNAL_PORT")
 
     def __init__(self):
         pass
