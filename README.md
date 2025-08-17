@@ -29,24 +29,11 @@ docker network create user_management_network
 docker volume create user_management_volume
 ```
 
-### 3. Start PostgreSQL Database
-
-```bash
-docker run -d \
-  -p 8889:5432 \
-  -e POSTGRES_USER=maissen \
-  -e POSTGRES_PASSWORD=maissen \
-  -e POSTGRES_DB=user_management \
-  --network user_management_network \
-  -v user_management_volume:/var/lib/postgresql/data \
-  --name user_management_postgres \
-  postgres:17-alpine
-```
 
 ### 4. Start the Application
 
 ```bash
-docker container run -d -p 8100:8000 --network user_management_network -v $(pwd):/app --name user_platform user_management:latest
+docker compose up -d
 ```
 
 ## Access Information
@@ -77,42 +64,11 @@ docker container run -d -p 8100:8000 --network user_management_network -v $(pwd)
 docker ps
 ```
 
-### View Container Logs
+### Stop Application
 ```bash
-# Application logs
-docker logs user_platform
-
-# Database logs
-docker logs user_management_postgres
+docker compose down
 ```
 
-### Stop Containers
-```bash
-docker stop user_platform user_management_postgres
-```
-
-### Remove Containers
-```bash
-docker rm user_platform user_management_postgres
-```
-
-### Remove Network
-```bash
-docker network rm user_management_network
-```
-
-### Complete Cleanup
-```bash
-# Stop and remove containers
-docker stop user_platform user_management_postgres
-docker rm user_platform user_management_postgres
-
-# Remove network
-docker network rm user_management_network
-
-# Remove image (optional)
-docker rmi user_management:latest
-```
 
 ## Troubleshooting
 
@@ -127,15 +83,4 @@ docker rmi user_management:latest
    ```bash
    docker logs user_platform
    docker logs user_management_postgres
-   ```
-
-### Database Connection Issues
-1. Ensure both containers are on the same network:
-   ```bash
-   docker network inspect user_management_network
-   ```
-
-2. Test database connectivity:
-   ```bash
-   docker exec -it user_management_postgres psql -U maissen -d user_management
    ```
