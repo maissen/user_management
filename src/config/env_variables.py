@@ -1,0 +1,26 @@
+import os
+from dotenv import load_dotenv
+from typing import Optional
+
+# Load environment variables from .env file
+load_dotenv()
+
+class Settings:
+
+    # Application Configuration
+    APP_NAME: str = os.getenv("APP_NAME", "FastAPI Application")
+    APP_VERSION: str = os.getenv("APP_VERSION", "1.0.0")
+    APP_DESCRIPTION: str = os.getenv("APP_DESCRIPTION", "A FastAPI application")
+    DEBUG: bool = os.getenv("DEBUG", "false").lower() == "true"
+
+    # Server Configuration
+    HOST: str = os.getenv("HOST", "127.0.0.1")
+    PORT: int = int(os.getenv("PORT", "8000"))
+
+
+    def __init__(self):
+        pass
+
+
+# Create a global settings instance
+settings = Settings()
