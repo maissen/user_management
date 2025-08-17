@@ -1,6 +1,5 @@
 import os
 from dotenv import load_dotenv
-from typing import Optional
 
 # Load environment variables from .env file
 load_dotenv()
@@ -14,8 +13,8 @@ class Settings:
     DEBUG: bool = os.getenv("DEBUG", "false").lower() == "true"
 
     # Server Configuration
-    HOST: str = os.getenv("HOST", "127.0.0.1")
-    PORT: int = int(os.getenv("PORT", "8000"))
+    HOST: str = os.getenv("HOST", "0.0.0.0")
+    INTERNAL_PORT: int = int(os.getenv("INTERNAL_PORT", "8000"))
 
 
     def __init__(self):
